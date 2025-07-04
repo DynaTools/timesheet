@@ -1,0 +1,12 @@
+# Jekyll configuration for GitHub Pages
+# This ensures that all files are served correctly
+
+plugins:
+  - jekyll-relative-links
+
+relative_links:
+  enabled: true
+  collections: true
+
+include:
+  - README.md
