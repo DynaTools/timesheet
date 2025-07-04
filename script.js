@@ -9,6 +9,11 @@ class TimesheetTracker {
         this.updateSummary();
         this.displayLogEntries();
         this.displayWeeklyTable();
+        
+        // Initialize Google Drive sync
+        setTimeout(() => {
+            googleDriveSync = new GoogleDriveSync();
+        }, 100);
     }
 
     updateCurrentDate() {
@@ -38,6 +43,11 @@ class TimesheetTracker {
         this.displayLogEntries();
         this.displayWeeklyTable();
         this.showStatusMessage(`${this.formatEntryType(type)} logged at ${entry.time}`);
+        
+        // Sync with Google Drive if available
+        if (googleDriveSync && googleDriveSync.isSignedIn) {
+            googleDriveSync.saveTimesheetToDrive(this.entries);
+        }
     }
 
     formatEntryType(type) {
@@ -207,6 +217,11 @@ class TimesheetTracker {
             this.displayLogEntries();
             this.displayWeeklyTable();
             this.showStatusMessage('All data has been cleared.');
+            
+            // Sync with Google Drive if available
+            if (googleDriveSync && googleDriveSync.isSignedIn) {
+                googleDriveSync.saveTimesheetToDrive(this.entries);
+            }
         }
     }
 
